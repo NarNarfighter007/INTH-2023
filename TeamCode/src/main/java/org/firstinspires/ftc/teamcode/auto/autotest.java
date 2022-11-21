@@ -21,12 +21,12 @@ public class autotest extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-        while (clawP <= 0.4) {
+        while (clawP <= 0.3) {
         telemetry.update();
         Claw.setPosition(clawP);
         clawP = clawP + 0.05;
         telemetry.addData("Position:", clawP);
-        sleep(100);
+        sleep(1000);
         telemetry.update();
         }
         sleep(10000);
