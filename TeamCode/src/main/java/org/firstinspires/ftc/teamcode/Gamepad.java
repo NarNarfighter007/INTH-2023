@@ -16,6 +16,7 @@ public class Gamepad extends OpMode {
     DcMotor frontRight;
     DcMotor backLeft;
     DcMotor backRight;
+    DcMotor Slippy;
     Servo Claw;
     OpenCvCamera Eye;
 
@@ -27,6 +28,7 @@ public class Gamepad extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, ("frontRight"));
         backRight = hardwareMap.get(DcMotor.class, ("backRight"));
         backLeft = hardwareMap.get(DcMotor.class, ("backLeft"));
+        Slippy = hardwareMap.get(DcMotor.class, ("Slippy"));
         Claw = hardwareMap.get(Servo.class, ("Claw"));
         telemetry.addData("Servo Position:", Claw.getPosition());
     }
@@ -44,6 +46,19 @@ public class Gamepad extends OpMode {
             else Claw.setPosition(0.3);
             changed = true;
         } else if(!gamepad1.dpad_right) changed = false;
+
+
+        if (gamepad1.dpad_up){
+            Slippy.setPower(-1);
+        }
+
+        Slippy.setPower(0);
+
+        if (gamepad1.dpad_down){
+            Slippy.setPower(0.5);
+        }
+
+        Slippy.setPower(0);
 
        /* if (gamepad1.dpad_right) {
             Claw.setPosition(0); //Closed
