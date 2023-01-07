@@ -33,13 +33,9 @@ public class autotest extends LinearOpMode {
 
         telemetry.addData("Motor Encoder frontLeft:", frontLeft.getCurrentPosition());
 
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
 
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
 
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -49,8 +45,10 @@ public class autotest extends LinearOpMode {
         Pos = 0;
 
         waitForStart();
-        drive(1000000,0.25);
-    }
+        telemetry.update();
+        drive(537,0.4);
+        }
+
 
 
         private void drive (int Postarget, double speed){
@@ -60,12 +58,26 @@ public class autotest extends LinearOpMode {
             backRight.setTargetPosition(Pos);
             backLeft.setTargetPosition(Pos);
 
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
             frontRight.setPower(speed);
             backLeft.setPower(speed);
             frontLeft.setPower(speed);
-            backLeft.setPower(speed);
+            backRight.setPower(speed);
 
+            while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
+                idle();
+            }
         }
 
+    private void stopDriving () {
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        frontLeft.setPower(0);
+        backLeft.setPower(0);
+    }
 
     }
