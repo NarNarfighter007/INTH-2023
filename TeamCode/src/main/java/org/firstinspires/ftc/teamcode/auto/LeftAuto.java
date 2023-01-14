@@ -47,12 +47,75 @@ public class LeftAuto extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Slippy.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+
         Pos = 0;
         height=0;
+        Claw.setPosition(0.3);
 
         waitForStart();
         telemetry.update();
-        drive(228, 0.4); //driving forward 5 inches
+        //sees qr code 1 from left side of alliance (left wheels lined up with edge of square mat)
+        resetEncoders();
+        drive(1000, 0.4); //driving forward 5 inches: initial value 228
+        stopDriving();
+        resetEncoders();
+        TurnC(.5,2000); //turning clockwise 90 degrees !! TEST THIS
+        resetEncoders();
+        /*
+        drive(1371, 0.4); //driving forward 20 inches
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,1000); //turning CC 90 degrees
+        drive(2285, 0.4); //driving forward 50 inches
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,500); //turning CC 45 degrees
+        drive(274, 0.4); //driving forward 6 inches
+        stopDriving();
+        lift(1000,1); //test this!!!!!
+        resetEncoders();
+        drive(46,0.2);
+        stopDriving();
+        resetEncoders();
+        Claw.setPosition(0.3); //fix claw position
+        sleep(500);
+        Claw.setPosition(0);
+        drive(-46,-0.2); //check negatives
+        stopDriving();
+        resetEncoders();
+        lift(0,-1); //dropping lift
+        resetEncoders();
+        drive(-274,-0.4); //driving 6 inches backward
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,500); //turning CC 45 degrees
+        StrafeLeft(.4,500); //strafe left 4.5 inches
+        lift(700,1); //lift claw 7 inches
+        Claw.setPosition(0.3);
+        drive(2514,0.4); //driving forward 55 inches
+        stopDriving();
+        Claw.setPosition(0);
+        lift(700,1); //lift cone from top of stack
+        resetEncoders();
+        drive(-2742,-0.3); //driving backwards
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,1); //turning 120 degrees counterclockwise
+        drive(594,.3); //driving to large size pole (13 inches)
+        stopDriving();
+        resetEncoders();
+        lift(3000,1); //raise lift to level of large size pole
+        Claw.setPosition(0.3);
+        sleep(500);
+        Claw.setPosition(0);
+        lift(0,1);
+        drive(-91,-0.4); //drives backwards to park
+        stopDriving();
+        resetEncoders();
+
+
+//sees qr code number 2 from left side of alliance
+      /*  drive(228, 0.4); //driving forward 5 inches
         stopDriving();
         TurnC(0.4,1000); //turning clockwise 90 degrees !! TEST THIS
         resetEncoders();
@@ -79,7 +142,7 @@ public class LeftAuto extends LinearOpMode {
         resetEncoders();
         lift(0,-1); //dropping lift
         resetEncoders();
-        drive(-274,0.4); //driving 6 inches backward
+        drive(-274,-0.4); //driving 6 inches backward
         stopDriving();
         resetEncoders();
         TurnCC(0.4,500); //turning CC 45 degrees
@@ -91,26 +154,87 @@ public class LeftAuto extends LinearOpMode {
         Claw.setPosition(0);
         lift(700,1); //lift cone from top of stack
         resetEncoders();
-        drive(-2514,0.3);
+        drive(-2742,-0.3); //driving backwards
         stopDriving();
         resetEncoders();
-        TurnCC(0.4,500); //turning 45 degrees counterclockwise
-        drive(457,.3); //driving to medium size pole (10 inches)
+        TurnCC(0.4,1000); //turning 120 degrees counterclockwise
+        drive(594,.3); //driving to large size pole (13 inches)
         stopDriving();
         resetEncoders();
-        lift(800,1); //raise lift to level of medium size pole
+        lift(3000,1); //raise lift to level of large size pole
         Claw.setPosition(0.3);
         sleep(500);
         Claw.setPosition(0);
         lift(0,1);
-        drive(91,0.4);
+        drive(-91,-0.4); //drives backwards to park
         stopDriving();
         resetEncoders();
+        TurnCC(0.4,500); //turning 60 degrees
+        drive(-1371, 0.4);
+        stopDriving();
+        resetEncoders();
+*/
 
-
-
-
-
+        //sees qr code number 3 from left side of alliance
+        /* drive(228, 0.4); //driving forward 5 inches
+        stopDriving();
+        TurnC(0.4,1000); //turning clockwise 90 degrees !! TEST THIS
+        resetEncoders();
+        drive(914, 0.4); //driving forward 20 inches
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,1000); //turning CC 90 degrees
+        drive(2285, 0.4); //driving forward 50 inches
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,500); //turning CC 45 degrees
+        drive(274, 0.4); //driving forward 6 inches
+        stopDriving();
+        lift(1000,1); //test this!!!!!
+        resetEncoders();
+        drive(46,0.2);
+        stopDriving();
+        resetEncoders();
+        Claw.setPosition(0.3); //fix claw position
+        sleep(500);
+        Claw.setPosition(0);
+        drive(-46,-0.2); //check negatives
+        stopDriving();
+        resetEncoders();
+        lift(0,-1); //dropping lift
+        resetEncoders();
+        drive(-274,-0.4); //driving 6 inches backward
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,500); //turning CC 45 degrees
+        StrafeLeft(.4,500); //strafe left 4.5 inches
+        lift(700,1); //lift claw 7 inches
+        Claw.setPosition(0.3);
+        drive(2514,0.4); //driving forward 55 inches
+        stopDriving();
+        Claw.setPosition(0);
+        lift(700,1); //lift cone from top of stack
+        resetEncoders();
+        drive(-2742,-0.3); //driving backwards
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,1000); //turning 120 degrees counterclockwise
+        drive(594,.3); //driving to large size pole (13 inches)
+        stopDriving();
+        resetEncoders();
+        lift(3000,1); //raise lift to level of large size pole
+        Claw.setPosition(0.3);
+        sleep(500);
+        Claw.setPosition(0);
+        lift(0,1);
+        drive(-91,-0.4); //drives backwards to park
+        stopDriving();
+        resetEncoders();
+        TurnCC(0.4,500); //turning 60 degrees
+        drive(-3108, -0.4);
+        stopDriving();
+        resetEncoders();
+*/
 
 
 
@@ -118,6 +242,17 @@ public class LeftAuto extends LinearOpMode {
 
 
     private void drive(int Postarget, double speed) {
+
+        //backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         Pos = Postarget;
         frontLeft.setTargetPosition(Pos);
         frontRight.setTargetPosition(Pos);
@@ -134,9 +269,9 @@ public class LeftAuto extends LinearOpMode {
         frontLeft.setPower(speed);
         backRight.setPower(speed);
 
-        while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
-            idle();
-        }
+       // while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
+        //    idle();
+        //}
     }
 
     private void stopDriving() {
@@ -149,6 +284,11 @@ public class LeftAuto extends LinearOpMode {
 
 
     public void TurnCC(double power, long millis) {
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         frontLeft.setPower(-power);
         frontRight.setPower(power);
         backLeft.setPower(-power);
@@ -161,9 +301,18 @@ public class LeftAuto extends LinearOpMode {
         backLeft.setPower(0);
         backRight.setPower(0);
 
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void TurnC(double power, long millis) {
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         frontLeft.setPower(power);
         frontRight.setPower(-power);
         backLeft.setPower(power);
@@ -175,6 +324,11 @@ public class LeftAuto extends LinearOpMode {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
     public void resetEncoders() {
@@ -196,6 +350,11 @@ public class LeftAuto extends LinearOpMode {
         }
     }
     public void StrafeRight(double power, long millis){
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         frontLeft.setPower(power);
         frontRight.setPower(-power);
         backLeft.setPower(-power);
@@ -208,8 +367,18 @@ public class LeftAuto extends LinearOpMode {
         backLeft.setPower(0);
         backRight.setPower(0);
 
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
     public void StrafeLeft(double power, long millis){
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         frontLeft.setPower(-power);
         frontRight.setPower(power);
         backLeft.setPower(power);
@@ -222,6 +391,10 @@ public class LeftAuto extends LinearOpMode {
         backLeft.setPower(0);
         backRight.setPower(0);
 
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 }

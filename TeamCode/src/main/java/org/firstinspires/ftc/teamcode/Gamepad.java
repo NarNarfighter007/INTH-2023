@@ -36,6 +36,9 @@ public class Gamepad extends OpMode {
         telemetry.addData("Motor Encoder backLeft:", backLeft.getCurrentPosition());
         telemetry.addData("Motor Encoder frontRight:", frontRight.getCurrentPosition());
         telemetry.addData("Motor Encoder backRight:", backRight.getCurrentPosition());
+        telemetry.addData("Slippy Encoder:", Slippy.getCurrentPosition());
+
+        Slippy.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
       /*  frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -60,6 +63,8 @@ public class Gamepad extends OpMode {
         telemetry.addData("Motor Encoder backLeft:", backLeft.getCurrentPosition());
         telemetry.addData("Motor Encoder frontRight:", frontRight.getCurrentPosition());
         telemetry.addData("Motor Encoder backRight:", backRight.getCurrentPosition());
+        telemetry.addData("Slippy Encoder:", Slippy.getCurrentPosition());
+
 
    /*     if(gamepad1.dpad_right && !changed) {
             if(Claw.getPosition() == 0.3) Claw.setPosition(0);
