@@ -79,7 +79,7 @@ public class Gamepad extends OpMode {
             changed = true;
         } else if(!gamepad1.dpad_right) changed = false; */
 
-        if (gamepad2.dpad_up) {
+        if (gamepad2.dpad_up) { //lift up
             telemetry.addLine("dpadup");
             SlippyRight.setPower(-1);
             SlippyLeft.setPower(-1);
@@ -89,7 +89,7 @@ public class Gamepad extends OpMode {
         SlippyLeft.setPower(0);
 
 
-        if (gamepad2.dpad_down) {
+        if (gamepad2.dpad_down) {   //lift down
             SlippyRight.setPower(0.5);
             SlippyLeft.setPower(0.5);
 
