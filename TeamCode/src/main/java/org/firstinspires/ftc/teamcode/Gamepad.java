@@ -16,7 +16,8 @@ public class Gamepad extends OpMode {
     DcMotor frontRight;
     DcMotor backLeft;
     DcMotor backRight;
-    DcMotor Slippy;
+    DcMotor SlippyRight;
+    DcMotor SlippyLeft;
     Servo Claw;
     OpenCvCamera Eye;
 
@@ -28,7 +29,8 @@ public class Gamepad extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, ("frontRight"));
         backRight = hardwareMap.get(DcMotor.class, ("backRight"));
         backLeft = hardwareMap.get(DcMotor.class, ("backLeft"));
-        Slippy = hardwareMap.get(DcMotor.class, ("Slippy"));
+        SlippyRight = hardwareMap.get(DcMotor.class, ("SlippyRight"));
+        SlippyLeft = hardwareMap.get(DcMotor.class, ("SlippyLeft"));
         Claw = hardwareMap.get(Servo.class, ("Claw"));
 
         telemetry.addData("Servo Position:", Claw.getPosition());
@@ -36,10 +38,14 @@ public class Gamepad extends OpMode {
         telemetry.addData("Motor Encoder backLeft:", backLeft.getCurrentPosition());
         telemetry.addData("Motor Encoder frontRight:", frontRight.getCurrentPosition());
         telemetry.addData("Motor Encoder backRight:", backRight.getCurrentPosition());
-        telemetry.addData("Slippy Encoder:", Slippy.getCurrentPosition());
+        telemetry.addData("SlippyRight Encoder:", SlippyRight.getCurrentPosition());
+        telemetry.addData("SlippyLeft Encoder:", SlippyLeft.getCurrentPosition());
 
-        Slippy.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        SlippyRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SlippyLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SlippyRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        SlippyLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
       /*  frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -51,10 +57,10 @@ public class Gamepad extends OpMode {
     @Override
 
     public void loop() {
-        frontLeft.setPower((0.5) * (gamepad1.left_stick_y + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
-        frontRight.setPower((-0.5) * (gamepad1.left_stick_y + gamepad1.left_stick_x + gamepad1.right_stick_x));
-        backRight.setPower((0.5) * (-gamepad1.left_stick_y + gamepad1.left_stick_x + -gamepad1.right_stick_x));
-        backLeft.setPower((0.5) * (gamepad1.left_stick_y + gamepad1.left_stick_x + -gamepad1.right_stick_x));
+        frontLeft.setPower((0.35) * ((1.5*gamepad1.left_stick_y) + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
+        frontRight.setPower((-0.35) * ((1.5*gamepad1.left_stick_y) + gamepad1.left_stick_x + gamepad1.right_stick_x));
+        backRight.setPower((0.35) * ((-1.5*gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
+        backLeft.setPower((0.35) * ((1.5*gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
 
         telemetry.update();
 
@@ -63,7 +69,8 @@ public class Gamepad extends OpMode {
         telemetry.addData("Motor Encoder backLeft:", backLeft.getCurrentPosition());
         telemetry.addData("Motor Encoder frontRight:", frontRight.getCurrentPosition());
         telemetry.addData("Motor Encoder backRight:", backRight.getCurrentPosition());
-        telemetry.addData("Slippy Encoder:", Slippy.getCurrentPosition());
+        telemetry.addData("SlippyRight Encoder:", SlippyRight.getCurrentPosition());
+        telemetry.addData("SlippyLeft Encoder:", SlippyLeft.getCurrentPosition());
 
 
    /*     if(gamepad1.dpad_right && !changed) {
@@ -72,32 +79,34 @@ public class Gamepad extends OpMode {
             changed = true;
         } else if(!gamepad1.dpad_right) changed = false; */
 
-
-        if (gamepad1.dpad_up) {
-            Slippy.setPower(-1);
+        if (gamepad2.dpad_up) {
+            telemetry.addLine("dpadup");
+            SlippyRight.setPower(-1);
+            SlippyLeft.setPower(-1);
         }
 
-        Slippy.setPower(0);
+        SlippyRight.setPower(0);
+        SlippyLeft.setPower(0);
 
-        if (gamepad1.dpad_down) {
-            Slippy.setPower(0.5);
+
+        if (gamepad2.dpad_down) {
+            SlippyRight.setPower(0.5);
+            SlippyLeft.setPower(0.5);
+
         }
 
-        Slippy.setPower(0);
 
-        if (gamepad1.dpad_right) {
-            Claw.setPosition(0.535); //Open;
+        if (gamepad2.right_trigger > 0 ) {
+            gamepad2.setLedColor(100,100,100, 100);
+            Claw.setPosition(0.55); //Open;
             telemetry.addData("Position:", Claw.getPosition());
-        } else {
-            Claw.setPosition(0.45); //Closed
+        } else if (gamepad2.left_trigger > 0 ){
+            gamepad2.setLedColor(100,100,100, 100);
+            gamepad2.rumbleBlips(1);
+            Claw.setPosition(0); //Closed
             telemetry.addData("Position:", Claw.getPosition());
         }
 
-        }
+
     }
-
-
-
-
-
-
+    }

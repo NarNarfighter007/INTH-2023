@@ -56,10 +56,11 @@ public class LeftAuto extends LinearOpMode {
         telemetry.update();
         //sees qr code 1 from left side of alliance (left wheels lined up with edge of square mat)
         resetEncoders();
-        drive(1000, 0.4); //driving forward 5 inches: initial value 228
+        drive(1000, 0.4);  //driving forward 5 inches = 228
         stopDriving();
         resetEncoders();
-        TurnC(.5,2000); //turning clockwise 90 degrees !! TEST THIS
+        sleep(50000);
+        TurnC(.5,1000); //turning clockwise 90 degrees !! TEST THIS
         resetEncoders();
         /*
         drive(1371, 0.4); //driving forward 20 inches
@@ -247,6 +248,7 @@ public class LeftAuto extends LinearOpMode {
         //backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        resetEncoders();
 
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -259,6 +261,10 @@ public class LeftAuto extends LinearOpMode {
         backRight.setTargetPosition(Pos);
         backLeft.setTargetPosition(Pos);
 
+        telemetry.addData("currentPos", frontLeft.getCurrentPosition());
+        telemetry.addData("target", frontLeft.getTargetPosition());
+        telemetry.update();
+        sleep(3000);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -269,21 +275,26 @@ public class LeftAuto extends LinearOpMode {
         frontLeft.setPower(speed);
         backRight.setPower(speed);
 
-       // while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
-        //    idle();
-        //}
+        resetEncoders();
+
+       while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
+           idle();
+        }
     }
 
     private void stopDriving() {
+        resetEncoders();
         frontRight.setPower(0);
         backLeft.setPower(0);
         frontLeft.setPower(0);
         backLeft.setPower(0);
         Slippy.setPower(0);
+        resetEncoders();
     }
 
 
     public void TurnCC(double power, long millis) {
+        resetEncoders();
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -305,9 +316,11 @@ public class LeftAuto extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        resetEncoders();
     }
 
     public void TurnC(double power, long millis) {
+        resetEncoders();
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -329,6 +342,7 @@ public class LeftAuto extends LinearOpMode {
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        resetEncoders();
 
     }
     public void resetEncoders() {
@@ -350,6 +364,7 @@ public class LeftAuto extends LinearOpMode {
         }
     }
     public void StrafeRight(double power, long millis){
+        resetEncoders();
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -371,9 +386,11 @@ public class LeftAuto extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        resetEncoders();
     }
 
     public void StrafeLeft(double power, long millis){
+        resetEncoders();
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -395,6 +412,7 @@ public class LeftAuto extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        resetEncoders();
     }
 
 }
