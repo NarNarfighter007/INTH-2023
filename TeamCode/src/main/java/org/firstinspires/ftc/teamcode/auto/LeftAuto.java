@@ -23,7 +23,7 @@ public class LeftAuto extends LinearOpMode {
     private int Pos;
     private int height;
 
-    public final static double cycle = 537.4;
+    public final static double cycle = 537.4; //encoder value = 11.87 inches
 
     @Override
     public void runOpMode() {
