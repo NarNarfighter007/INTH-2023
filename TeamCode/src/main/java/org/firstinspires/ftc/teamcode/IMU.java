@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -60,7 +60,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 import java.util.Locale;
 
-/**
+/*
  * {@link SensorBNO055IMU} gives a short demo on how to use the BNO055 Inertial Motion Unit (IMU) from AdaFruit.
  *
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
@@ -70,8 +70,8 @@ import java.util.Locale;
  */
 
 @TeleOp(name = "Sensor: BNO055 IMU", group = "Sensor")
-@Disabled                            // Comment this out to add to the opmode list
-public class SensorBNO055IMU extends LinearOpMode {
+//@Disabled                            // Comment this out to add to the opmode list
+public class IMU extends LinearOpMode {
     //----------------------------------------------------------------------------------------------
     // State
     //----------------------------------------------------------------------------------------------
@@ -208,9 +208,9 @@ public class SensorBNO055IMU extends LinearOpMode {
         return String.format(Locale.getDefault(), "%.1f", AngleUnit.DEGREES.normalize(degrees));
     }
 
-        public Object getAngularOrientation(AxesReference intrinsic, AxesOrder zyx, BNO055IMU.AngleUnit degrees) {
+    public Object getAngularOrientation(AxesReference intrinsic, AxesOrder zyx, BNO055IMU.AngleUnit degrees) {
         return 0;
-        }
     }
+}
 
 
