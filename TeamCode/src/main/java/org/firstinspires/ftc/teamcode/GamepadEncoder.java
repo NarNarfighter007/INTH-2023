@@ -4,19 +4,14 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.openftc.easyopencv.OpenCvCamera;
 
 
 @TeleOp(group = "Main")
 
-public class Gamepad extends OpMode {
+public class GamepadEncoder extends OpMode {
 
     BNO055IMU imu;
     DcMotor frontLeft;
@@ -27,6 +22,10 @@ public class Gamepad extends OpMode {
     DcMotor SlippyLeft;
     Servo Claw;
     OpenCvCamera Eye;
+
+    private int Pos;
+    private int height;
+
 
 
     @Override
@@ -52,8 +51,8 @@ public class Gamepad extends OpMode {
 
         //    SlippyRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //    SlippyLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        SlippyRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        SlippyLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        SlippyRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SlippyLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
       /*  frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -61,6 +60,8 @@ public class Gamepad extends OpMode {
     }
 
     boolean changed = false; //Outside of loop()
+
+
 
     @Override
 
@@ -89,13 +90,28 @@ public class Gamepad extends OpMode {
             changed = true;
         } else if(!gamepad1.dpad_right) changed = false; */
 
-        if (gamepad2.dpad_down) { //lift down
-            telemetry.addLine("dpaddown");
-            SlippyRight.setPower(-1);
-            SlippyLeft.setPower(1);
-        } else {
-            SlippyRight.setPower(0);
-            SlippyLeft.setPower(0);  }
+        //low level = slippyRight = 1460
+        //medium level = slippyRight = 2416
+        //top level = slippyRight = 3400
+
+        if (gamepad2.a) { //low
+            telemetry.addLine("a button pressed");
+            lift(1460,1);
+
+
+        }
+
+        if (gamepad2.b) { //bring lift down
+            telemetry.addLine("b button pressed");
+            lift(0,-1);
+
+
+        }
+
+
+
+
+
            /* if (SlippyLeft.getCurrentPosition() > 0) {
                 SlippyRight.setPower(-1);
                 SlippyLeft.setPower(1);
@@ -104,16 +120,8 @@ public class Gamepad extends OpMode {
                 SlippyLeft.setPower(0);
 
             */
-            //}
+        //}
 
-
-            if (gamepad2.dpad_up) {   //lift up
-                telemetry.addLine("dpadup");
-                SlippyRight.setPower(1);
-                SlippyLeft.setPower(-1);
-            } else {
-                SlippyRight.setPower(0);
-                SlippyLeft.setPower(0); }
                /* if (SlippyLeft.getCurrentPosition() < 3570) {
                     SlippyRight.setPower(1);
                     SlippyLeft.setPower(-1);
@@ -122,16 +130,16 @@ public class Gamepad extends OpMode {
                     SlippyLeft.setPower(0);
 
                 */
-        
-                //}
+
+        //}
 
 //0.55 = open
 
-            if (gamepad2.right_trigger >= 0) {
-                gamepad2.setLedColor(100, 100, 100, 100);
-                Claw.setPosition(0.6*(gamepad2.right_trigger)); //Open;
-                telemetry.addData("Position:", Claw.getPosition());
-            } /*else if (gamepad2.right_trigger > 0) {
+        if (gamepad2.right_trigger >= 0) {
+            gamepad2.setLedColor(100, 100, 100, 100);
+            Claw.setPosition(0.6 * (gamepad2.right_trigger)); //Open;
+            telemetry.addData("Position:", Claw.getPosition());
+        } /*else if (gamepad2.right_trigger > 0) {
                 gamepad2.setLedColor(100, 100, 100, 100);
                 gamepad2.rumbleBlips(1);
                 Claw.setPosition(0); //Closed
@@ -139,6 +147,20 @@ public class Gamepad extends OpMode {
             }*/
 
 
-        }
     }
+    private void lift(int Postarget, double speed) { //find encoder values for different levels!!!!
+        Pos = Postarget;
+        SlippyRight.setTargetPosition(height);
+        SlippyRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        SlippyRight.setPower(speed);
+
+
+/*        while (opModeIsActive() && SlippyRight.isBusy()) {
+            SlippyLeft.setPower(-speed);
+        }
+*/
+
+    }
+}
+
 

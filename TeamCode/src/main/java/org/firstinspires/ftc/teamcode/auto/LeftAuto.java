@@ -63,8 +63,6 @@ public class LeftAuto extends Gyro {
 
 
 
-
-
         Pos = 0;
         height=0;
         Claw.setPosition(0.3);
