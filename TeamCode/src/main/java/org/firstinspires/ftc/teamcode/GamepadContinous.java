@@ -113,8 +113,8 @@ public class GamepadContinous extends OpMode {
 
         if (gamepad2.dpad_down) { //lift down
             telemetry.addLine("dpaddown");
-            SlippyRight.setPower(1);
-            SlippyLeft.setPower(-1);
+            SlippyRight.setPower(-0.5);
+            SlippyLeft.setPower(0.5);
         } else {
             SlippyRight.setPower(0);
             SlippyLeft.setPower(0);
@@ -132,8 +132,8 @@ public class GamepadContinous extends OpMode {
 
         if (gamepad2.dpad_up) {   //lift up
             telemetry.addLine("dpadup");
-            SlippyRight.setPower(1);
-            SlippyLeft.setPower(-1);
+            SlippyRight.setPower(0.5);
+            SlippyLeft.setPower(-0.5);
         } else {
             SlippyRight.setPower(0);
             SlippyLeft.setPower(0);

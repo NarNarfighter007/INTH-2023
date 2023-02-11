@@ -1,20 +1,15 @@
 package org.firstinspires.ftc.teamcode.auto;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.openftc.easyopencv.OpenCvCamera;
 
 //import org.firstinspires.ftc.robotcontroller.external.samples.SensorBNO055IMU;
 
 
 @Autonomous(group = "Main")
-public class BatteryLeftAuto extends LinearOpMode {
+public class EncoderLeftAuto extends LinearOpMode {
 
     DcMotor frontLeft;
     DcMotor frontRight;
@@ -27,6 +22,7 @@ public class BatteryLeftAuto extends LinearOpMode {
 
     private int Pos;
     private int height;
+    private int rightangle;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -39,8 +35,13 @@ public class BatteryLeftAuto extends LinearOpMode {
         SlippyRight = hardwareMap.get(DcMotor.class, ("SlippyRight"));
         Claw = hardwareMap.get(Servo.class, ("Claw"));
 
+        telemetry.addData("Servo Position:", Claw.getPosition());
         telemetry.addData("Motor Encoder frontLeft:", frontLeft.getCurrentPosition());
-
+        telemetry.addData("Motor Encoder backLeft:", backLeft.getCurrentPosition());
+        telemetry.addData("Motor Encoder frontRight:", frontRight.getCurrentPosition());
+        telemetry.addData("Motor Encoder backRight:", backRight.getCurrentPosition());
+        telemetry.addData("SlippyRight Encoder:", SlippyRight.getCurrentPosition());
+        telemetry.addData("SlippyLeft Encoder:", SlippyLeft.getCurrentPosition());
 
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -55,24 +56,48 @@ public class BatteryLeftAuto extends LinearOpMode {
 
         SlippyRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         SlippyLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         Pos = 0;
+        rightangle = 719;
 
         waitForStart();
         telemetry.update();
         //sees qr code 1 from left side of alliance (Right wheels lined up with right edge of square mat)
         height=0;
         Claw.setPosition(0.3);
-
-      //  drive(228, 500);  //driving forward 5 inches = 228 //
+        drive(228, 0.35);  //driving forward 5 inches = 228 //
+        driveC(rightangle,0.35); //test this
+        drive(228*4,0.35);
+        driveCC(rightangle,0.35);
+        drive(228*10,0.35);
+        driveCC(rightangle/2,0.35);
+        lift(3460, 0.5);
+        telemetry.update();
+        sleep(4000);
+        drive(274,0.35); //228*1.2
+        sleep(200);
+        Claw.setPosition(0.6);
         sleep(500);
-        TurnCC(0.4,500); //test this
-      //  StrafeRight(900,500); //strafing right 18 inches
+        drive(-274,-0.35); //228*1.2
+        Claw.setPosition(0.3);
+        lift(0, -0.5);
+        telemetry.update();
+        sleep(4000);
+        driveCC(rightangle/2,0.35); //test this
+        drive(205, 0.35);
+        lift(3460/5, 0.5);
+        sleep(2000);
+        Claw.setPosition(0.6);
+        drive(228*9,0.35);
+        Claw.setPosition(0.3);
+        sleep(500);
+
+
 
         /*
         drive(2285, 400); //driving forward 50 inches
@@ -228,37 +253,12 @@ public class BatteryLeftAuto extends LinearOpMode {
 */}
 
 
-    public void drivewithoutencoders(double power, long millis) {
-
-        frontRight.setPower(power);
-        backLeft.setPower(power);
-        frontLeft.setPower(power);
-        backRight.setPower(power);
-
-        sleep(millis);
-
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        frontLeft.setPower(0);
-        backRight.setPower(0);
-
-    }
-
-
-    public void TurnCC(double power, long millis) {
-        frontLeft.setPower(-power);
-        frontRight.setPower(power);
-        backLeft.setPower(-power);
-        backRight.setPower(power);
-
-        sleep(millis);
-
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-    }
     private void driveCC (int Postarget, double speed) {
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         Pos = Postarget;
         frontLeft.setTargetPosition(-Pos);
         frontRight.setTargetPosition(Pos);
@@ -278,8 +278,15 @@ public class BatteryLeftAuto extends LinearOpMode {
         while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
             idle();
         }
+
+        sleep(500);
     }
         private void driveC (int Postarget, double speed) {
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
             Pos = Postarget;
             frontLeft.setTargetPosition(Pos);
             frontRight.setTargetPosition(-Pos);
@@ -299,40 +306,43 @@ public class BatteryLeftAuto extends LinearOpMode {
             while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
                 idle();
             }
+            sleep(500);
         }
 
-            public void TurnC ( double power, long millis){
-                frontLeft.setPower(power);
-                frontRight.setPower(-power);
-                backLeft.setPower(power);
-                backRight.setPower(-power);
-
-                sleep(millis);
-
-                frontLeft.setPower(0);
-                frontRight.setPower(0);
-                backLeft.setPower(0);
-                backRight.setPower(0);
-            }
 
         private void lift(int Postarget, double speed) { //find encoder values for different levels!!!!
-        Pos = Postarget; //test negative sign
+        SlippyRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SlippyLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        height = Postarget; //test negative sign
+            telemetry.update();
         SlippyRight.setTargetPosition(height);
-        while (opModeIsActive() && SlippyRight.isBusy()) {
-             //   idle();
-                SlippyLeft.setPower(-speed);
-            }
-            SlippyRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            SlippyRight.setPower(speed);
-
-
-
-
+        SlippyLeft.setTargetPosition(-height);
+        SlippyRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        SlippyLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.update();
+        SlippyRight.setPower(speed);
+        SlippyLeft.setPower(-speed);
+        if (SlippyRight.getCurrentPosition() == height || SlippyLeft.getCurrentPosition() == -height){
+            SlippyLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            SlippyRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            SlippyRight.setPower(0);
+            SlippyLeft.setPower(0);
+            telemetry.update();
+        }
+        //while (opModeIsActive() && SlippyRight.isBusy()) {
+            // idle();
+           // }
+        sleep(500);
         }
 
 
 
     private void drive (int Postarget, double speed){
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         Pos = Postarget;
         frontLeft.setTargetPosition(Pos);
         frontRight.setTargetPosition(Pos);
@@ -352,6 +362,7 @@ public class BatteryLeftAuto extends LinearOpMode {
         while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
             idle();
         }
+        sleep(500);
     }
 
 }
