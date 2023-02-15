@@ -67,66 +67,41 @@ public class EncoderLeftAuto extends LinearOpMode {
 
         waitForStart();
         telemetry.update();
-        //sees qr code 1 from left side of alliance (Right wheels lined up with right edge of square mat)
+        //sees qr code 1 from left side of alliance (Right wheels lined up with right edge of square mat) //1 in = 45
         height=0;
-        Claw.setPosition(0.3);
-        drive(228, 0.35);  //driving forward 5 inches = 228 //
-        driveC(rightangle,0.35); //test this
-        drive(228*4,0.35);
+        Claw.setPosition(0.25);
+        drive(45*7, .5);  //driving forward 5 inches = 228 //
+        driveC(rightangle,0.35);
+        drive(45*20,.35);
         driveCC(rightangle,0.35);
-        drive(228*10,0.35);
+        drive(-45*8, -.35); //backwards to line up
+        drive(45*53,0.43); //little more than 52 inches
         driveCC(rightangle/2,0.35);
-        lift(3460, 0.5);
+        lift(3460, 0.8);
         telemetry.update();
-        sleep(4000);
-        drive(274,0.35); //228*1.2
+        sleep(2500);
+        drive(46*11,.35); //little bit more than 11 inches to the pole
+        sleep(400);
+        Claw.setPosition(0.6);
+        sleep(700);
+        drive(-1*45,-.5);
         sleep(200);
-        Claw.setPosition(0.6);
-        sleep(500);
-        drive(-274,-0.35); //228*1.2
-        Claw.setPosition(0.3);
-        lift(0, -0.5);
+        lift(3460/5, -0.8);
+        sleep(1000);
+        drive(-10*45,-.5); //10 inches back
         telemetry.update();
-        sleep(4000);
-        driveCC(rightangle/2,0.35); //test this
-        drive(205, 0.35);
-        lift(3460/5, 0.5);
-        sleep(2000);
-        Claw.setPosition(0.6);
-        drive(228*9,0.35);
+        sleep(500);
+        driveCC(340,0.35);
+        drive(52*45,.6); //2422 = 50 inches
         Claw.setPosition(0.3);
         sleep(500);
-
-
+        lift(1400,0.8);
+        sleep(500);
+        drive(-52*45,-0.5);
+        lift(0,-0.8);
+        sleep(1000);
 
         /*
-        drive(2285, 400); //driving forward 50 inches
-        TurnCC(0.4,500); //turning CC 45 degrees
-        drive(274, 400); //driving forward 6 inches
-        lift(1000,1); //test this!!!!!
-        drive(46,200);
-        Claw.setPosition(0.3); //fix claw position
-        sleep(500);
-        Claw.setPosition(0);
-        drive(-46,200); //check negatives
-        lift(0,-1); //dropping lift
-        drive(-274,400); //driving 6 inches backward
-        TurnCC(0.4,500); //turning CC 45 degrees
-        StrafeLeft(.4,500); //strafe left 4.5 inches
-        lift(700,1); //lift claw 7 inches
-        Claw.setPosition(0.3);
-        drive(2514,400); //driving forward 55 inches
-        Claw.setPosition(0);
-        lift(700,1); //lift cone from top of stack
-        drive(-2742,300); //driving backwards
-        TurnCC(0.4,1); //turning 120 degrees counterclockwise
-        drive(594,300); //driving to large size pole (13 inches)
-        lift(3000,1); //raise lift to level of large size pole
-        Claw.setPosition(0.3);
-        sleep(500);
-        Claw.setPosition(0);
-        lift(0,1);
-        drive(-91,400); //drives backwards to park
 
 
 

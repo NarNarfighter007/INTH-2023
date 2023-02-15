@@ -3,14 +3,12 @@ package org.firstinspires.ftc.teamcode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.openftc.easyopencv.OpenCvCamera;
 
 @Autonomous(group = "Main")
-public class autotest extends LinearOpMode {
+public class strafetest extends LinearOpMode {
 
     DcMotor frontLeft;
     DcMotor frontRight;
@@ -46,7 +44,8 @@ public class autotest extends LinearOpMode {
 
         waitForStart();
         telemetry.update();
-        drive(537,0.4);
+        //drive(537,0.4);
+        straferight(50*48,0.35); //This should strafe 48 inches, so 50 encoders/inch
         }
 
 
@@ -82,4 +81,29 @@ public class autotest extends LinearOpMode {
         backLeft.setPower(0);
     }
 
+
+    private void straferight(int Postarget, double speed){
+        Pos = Postarget;
+        frontLeft.setTargetPosition(Pos);
+        frontRight.setTargetPosition(-Pos);
+        backRight.setTargetPosition(Pos);
+        backLeft.setTargetPosition(-Pos);
+
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontRight.setPower(-speed);
+        backLeft.setPower(-speed);
+        frontLeft.setPower(speed);
+        backRight.setPower(speed);
+
+        while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
+            idle();
+        }
+
+
     }
+
+}
