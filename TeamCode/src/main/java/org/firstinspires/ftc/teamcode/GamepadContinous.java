@@ -68,10 +68,24 @@ public class GamepadContinous extends OpMode {
     public void loop() {
 
 
-        frontLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
+       /* frontLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
         frontRight.setPower((-0.35) * ((1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + gamepad1.right_stick_x));
         backRight.setPower((0.35) * ((-1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
-        backLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
+        backLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x)); */
+
+        double powerFactor = 0.5; // Set the motor power factor
+        double accelerationFactor = 3; // Set the acceleration factor (2 for a quadratic curve)
+
+// Apply the acceleration curve to the stick input values
+        double leftStickY = Math.pow(gamepad1.left_stick_y, accelerationFactor);
+        double leftStickX = Math.pow(gamepad1.left_stick_x, accelerationFactor);
+        double rightStickX = Math.pow(gamepad1.right_stick_x, accelerationFactor);
+
+// Calculate the motor powers using the modified stick input values
+        frontLeft.setPower(powerFactor * ((leftStickY) + -leftStickX + -rightStickX));
+        frontRight.setPower(-powerFactor * ((leftStickY) + leftStickX + rightStickX));
+        backRight.setPower(powerFactor * ((-leftStickY) + leftStickX + -rightStickX));
+        backLeft.setPower(powerFactor * ((leftStickY) + leftStickX + -rightStickX));
 
         telemetry.update();
 
@@ -113,8 +127,8 @@ public class GamepadContinous extends OpMode {
 
         if (gamepad2.dpad_down) { //lift down
             telemetry.addLine("dpaddown");
-            SlippyRight.setPower(-0.5);
-            SlippyLeft.setPower(0.5);
+            SlippyRight.setPower(-0.8);
+            SlippyLeft.setPower(0.8);
         } else {
             SlippyRight.setPower(0);
             SlippyLeft.setPower(0);
@@ -132,8 +146,8 @@ public class GamepadContinous extends OpMode {
 
         if (gamepad2.dpad_up) {   //lift up
             telemetry.addLine("dpadup");
-            SlippyRight.setPower(0.5);
-            SlippyLeft.setPower(-0.5);
+            SlippyRight.setPower(1);
+            SlippyLeft.setPower(-1);
         } else {
             SlippyRight.setPower(0);
             SlippyLeft.setPower(0);
@@ -151,11 +165,24 @@ public class GamepadContinous extends OpMode {
 
 //0.55 = open
 
-        if (gamepad2.right_trigger >= 0) {
+        if (gamepad2.right_trigger >= .4) {
             gamepad2.setLedColor(100, 100, 100, 100);
-            Claw.setPosition(0.6 * (gamepad2.right_trigger)); //Open;
+            Claw.setPosition(.2); //Open;
             telemetry.addData("Position:", Claw.getPosition());
-        } /*else if (gamepad2.right_trigger > 0) {
+            gamepad2.rumbleBlips(1);
+        }
+        else {
+            Claw.setPosition(0); //Closed;
+        }
+        if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0) {
+            telemetry.addLine("KILL SWITCH ACTIVE");
+            System.exit(0); // Terminate the program
+        }
+        if (gamepad2.left_trigger > .4 && gamepad2.right_trigger > 0) {
+            telemetry.addLine("KILL SWITCH ACTIVE");
+            System.exit(0); // Terminate the program
+        }
+        /*else if (gamepad2.right_trigger > 0) {
                 gamepad2.setLedColor(100, 100, 100, 100);
                 gamepad2.rumbleBlips(1);
                 Claw.setPosition(0); //Closed

@@ -72,26 +72,14 @@ public class GamepadEncoder extends OpMode {
     public void loop() {
 
 
-       /* frontLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
+       frontLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
         frontRight.setPower((-0.35) * ((1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + gamepad1.right_stick_x));
         backRight.setPower((0.35) * ((-1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
         backLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
-*/
-        double powerFactor = 0.35; // Set the motor power factor
-        double accelerationFactor = 2; // Set the acceleration factor (2 for a quadratic curve)
 
-// Apply the acceleration curve to the stick input values
-        double leftStickY = Math.pow(gamepad1.left_stick_y, accelerationFactor);
-        double leftStickX = Math.pow(gamepad1.left_stick_x, accelerationFactor);
-        double rightStickX = Math.pow(gamepad1.right_stick_x, accelerationFactor);
 
-// Calculate the motor powers using the modified stick input values
-        frontLeft.setPower(powerFactor * ((1.5 * leftStickY) + -leftStickX + -rightStickX));
-        frontRight.setPower(-powerFactor * ((1.5 * leftStickY) + leftStickX + rightStickX));
-        backRight.setPower(powerFactor * ((-1.5 * leftStickY) + leftStickX + -rightStickX));
-        backLeft.setPower(powerFactor * ((1.5 * leftStickY) + leftStickX + -rightStickX));
+
         telemetry.update();
-
         telemetry.addData("Servo Position:", Claw.getPosition());
         telemetry.addData("Motor Encoder frontLeft:", frontLeft.getCurrentPosition());
         telemetry.addData("Motor Encoder backLeft:", backLeft.getCurrentPosition());
@@ -103,7 +91,7 @@ public class GamepadEncoder extends OpMode {
 
    /*     if(gamepad1.dpad_right && !changed) {
             if(Claw.getPosition() == 0.3) Claw.setPosition(0);
-            else Claw.setPosition(0.3);
+            else Claw.setPosition(0);
             changed = true;
         } else if(!gamepad1.dpad_right) changed = false; */
 
@@ -150,7 +138,7 @@ public class GamepadEncoder extends OpMode {
         if (gamepad2.right_trigger > 0) {
             gamepad2.setLedColor(100, 100, 100, 100);
             gamepad2.rumbleBlips(1);
-            Claw.setPosition(.55); //Closed
+            Claw.setPosition(.2); //Closed
             telemetry.addData("Position:", Claw.getPosition());
         } else {
             Claw.setPosition(0);

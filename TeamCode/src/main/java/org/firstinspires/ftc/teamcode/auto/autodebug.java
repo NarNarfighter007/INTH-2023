@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 
+import android.graphics.LinearGradient;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -12,7 +14,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 
 
 @Autonomous(group = "Main")
-public class autodebug extends Gyro {
+public class autodebug extends LinearOpModeTest {
 
     DcMotor frontLeft;
     DcMotor frontRight;

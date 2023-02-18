@@ -45,7 +45,7 @@ public class strafetest extends LinearOpMode {
         waitForStart();
         telemetry.update();
         //drive(537,0.4);
-        straferight(50*48,0.35); //This should strafe 48 inches, so 50 encoders/inch
+        straferight(50*48,0.35);
         }
 
 

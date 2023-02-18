@@ -71,9 +71,10 @@ public class EncoderLeftAuto extends LinearOpMode {
         height=0;
         Claw.setPosition(0.25);
         drive(45*7, .5);  //driving forward 5 inches = 228 //
-        driveC(rightangle,0.35);
-        drive(45*20,.35);
-        driveCC(rightangle,0.35);
+      //  driveC(rightangle,0.35);
+       // drive(45*20,.35);
+       // driveCC(rightangle,0.35);
+        straferight(50*24,0.35);
         drive(-45*8, -.35); //backwards to line up
         drive(45*53,0.43); //little more than 52 inches
         driveCC(rightangle/2,0.35);
@@ -289,7 +290,7 @@ public class EncoderLeftAuto extends LinearOpMode {
         SlippyRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SlippyLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         height = Postarget; //test negative sign
-            telemetry.update();
+        telemetry.update();
         SlippyRight.setTargetPosition(height);
         SlippyLeft.setTargetPosition(-height);
         SlippyRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -339,5 +340,27 @@ public class EncoderLeftAuto extends LinearOpMode {
         }
         sleep(500);
     }
+    private void straferight(int Postarget, double speed){ //This should strafe 48 inches, so 50 encoders/inch
+        Pos = Postarget;
+        frontLeft.setTargetPosition(Pos);
+        frontRight.setTargetPosition(-Pos);
+        backRight.setTargetPosition(Pos);
+        backLeft.setTargetPosition(-Pos);
 
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontRight.setPower(-speed);
+        backLeft.setPower(-speed);
+        frontLeft.setPower(speed);
+        backRight.setPower(speed);
+
+        while (opModeIsActive() && frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
+            idle();
+        }
+
+
+    }
 }
