@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.os.Bundle;
+import android.widget.Button;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -25,7 +28,6 @@ public class GamepadEncoder extends OpMode {
 
     private int Pos;
     private int height;
-
 
 
     @Override
@@ -98,42 +100,50 @@ public class GamepadEncoder extends OpMode {
 
         if (gamepad2.a) { //low
             telemetry.addLine("a button pressed");
-            lift(1460,1);
+            lift(1460, 1);
         }
 
         if (gamepad2.b) { //bring lift down
             telemetry.addLine("b button pressed");
-            lift(0,-1);
+            lift(0, -1);
         }
 
         if (gamepad2.y) { //high
             telemetry.addLine("y button pressed");
-            lift(3400,1);
+            lift(3400, 1);
         }
 
         if (gamepad2.x) { //medium
             telemetry.addLine("x button pressed");
-            lift(2416,1);
+            lift(2416, 1);
         }
 
+        if(gamepad2.dpad_up){
+            telemetry.addLine("dpadup2");
+            liftSlide();
+        }
 
+        if(gamepad2.dpad_down){
+            telemetry.addLine("dpaddown2");
+            lowerSlide();
+        }
 
 //0.55 = open
 
 
         if (gamepad2.right_trigger > 0) {
-                gamepad2.setLedColor(100, 100, 100, 100);
-                gamepad2.rumbleBlips(1);
-                Claw.setPosition(.55); //Closed
-                telemetry.addData("Position:", Claw.getPosition());
-            }
-        else {
+            gamepad2.setLedColor(100, 100, 100, 100);
+            gamepad2.rumbleBlips(1);
+            Claw.setPosition(.55); //Closed
+            telemetry.addData("Position:", Claw.getPosition());
+        } else {
             Claw.setPosition(0);
             telemetry.addData("Position:", Claw.getPosition());
         }
 
 
     }
+
     private void lift(int Postarget, double speed) { //find encoder values for different levels!!!!
         SlippyRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SlippyLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -144,7 +154,7 @@ public class GamepadEncoder extends OpMode {
         SlippyLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         SlippyRight.setPower(speed);
         SlippyLeft.setPower(-speed);
-        if (SlippyRight.getCurrentPosition() == height || SlippyLeft.getCurrentPosition() == -height){
+        if (SlippyRight.getCurrentPosition() == height || SlippyLeft.getCurrentPosition() == -height) {
             SlippyLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             SlippyRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             SlippyRight.setPower(0);
@@ -155,7 +165,60 @@ public class GamepadEncoder extends OpMode {
         // }
     }
 
+    private void liftSlide() {
+        liftEncoderValue += 100; // Increase the encoder value by 100. You can adjust this to change the amount the slide moves.
+        lift(liftEncoderValue, LIFT_SPEED); // Call the lift method with the new encoder value and lift speed.
+    }
+
+    // This is the method that will be called when you press the button to lower the slide.
+    private void lowerSlide() {
+        liftEncoderValue -= 100; // Decrease the encoder value by 100. You can adjust this to change the amount the slide moves.
+        lift(liftEncoderValue, -0.3); // Call the lift method with the new encoder value and lift speed.
+    }
 }
 
+  /*  protected void onCreate(Bundle savedInstanceState) {
+        // Set up the PS4 controller input.
+        // Replace the button and joystick constants with the actual values from your controller.
+        final Button liftButton = gamepad2;
+        final Joystick liftJoystick = gamepad.getJoystick(LEFT_JOYSTICK);
+
+        // Set up a timer to update the lift position based on the joystick input.
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int joystickY = liftJoystick.getY();
+                if (Math.abs(joystickY) > 0.1) { // Check that the joystick is not in the deadzone.
+                    liftEncoderValue += joystickY * 10; // Adjust the encoder value based on the joystick input.
+                    lift(liftEncoderValue, LIFT_SPEED); // Call the lift method with the new encoder value and lift speed.
+                }
+                handler.postDelayed(this, 20); // Update the lift position every 20 milliseconds.
+            }
+        });
+
+        // Set up the button listeners.
+        liftButton.setOnPressListener(new Runnable() {
+            @Override
+            public void run() {
+                liftSlide();
+            }
+        });
+        liftButton.setOnReleaseListener(new Runnable() {
+            @Override
+            public void run() {
+                // Stop lifting the slide when the button is released.
+                lift(0, 0);
+            }
+        });
+        liftButton.setOnHoldListener(new Runnable() {
+            @Override
+            public void run() {
+                // You can use this to implement continuous lifting while the button is held down.
+            }
+        });
+    }
+}
+*/
 
 
