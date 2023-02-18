@@ -72,11 +72,24 @@ public class GamepadEncoder extends OpMode {
     public void loop() {
 
 
-        frontLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
+       /* frontLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + -gamepad1.left_stick_x + -gamepad1.right_stick_x));
         frontRight.setPower((-0.35) * ((1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + gamepad1.right_stick_x));
         backRight.setPower((0.35) * ((-1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
         backLeft.setPower((0.35) * ((1.5 * gamepad1.left_stick_y) + gamepad1.left_stick_x + -gamepad1.right_stick_x));
+*/
+        double powerFactor = 0.35; // Set the motor power factor
+        double accelerationFactor = 2; // Set the acceleration factor (2 for a quadratic curve)
 
+// Apply the acceleration curve to the stick input values
+        double leftStickY = Math.pow(gamepad1.left_stick_y, accelerationFactor);
+        double leftStickX = Math.pow(gamepad1.left_stick_x, accelerationFactor);
+        double rightStickX = Math.pow(gamepad1.right_stick_x, accelerationFactor);
+
+// Calculate the motor powers using the modified stick input values
+        frontLeft.setPower(powerFactor * ((1.5 * leftStickY) + -leftStickX + -rightStickX));
+        frontRight.setPower(-powerFactor * ((1.5 * leftStickY) + leftStickX + rightStickX));
+        backRight.setPower(powerFactor * ((-1.5 * leftStickY) + leftStickX + -rightStickX));
+        backLeft.setPower(powerFactor * ((1.5 * leftStickY) + leftStickX + -rightStickX));
         telemetry.update();
 
         telemetry.addData("Servo Position:", Claw.getPosition());
@@ -129,7 +142,10 @@ public class GamepadEncoder extends OpMode {
         }
 
 //0.55 = open
-
+        if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0) {
+            telemetry.addLine("KILL SWITCH ACTIVE");
+            System.exit(0); // Terminate the program
+        }
 
         if (gamepad2.right_trigger > 0) {
             gamepad2.setLedColor(100, 100, 100, 100);
