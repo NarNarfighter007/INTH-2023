@@ -61,7 +61,9 @@ public class GamepadEncoder extends OpMode {
 
     boolean changed = false; //Outside of loop()
 
+    private static final int LIFT_SPEED = -1;
 
+    private int liftEncoderValue = 0;
 
     @Override
 
@@ -97,70 +99,63 @@ public class GamepadEncoder extends OpMode {
         if (gamepad2.a) { //low
             telemetry.addLine("a button pressed");
             lift(1460,1);
-
-
         }
 
         if (gamepad2.b) { //bring lift down
             telemetry.addLine("b button pressed");
             lift(0,-1);
+        }
 
+        if (gamepad2.y) { //high
+            telemetry.addLine("y button pressed");
+            lift(3400,1);
+        }
 
+        if (gamepad2.x) { //medium
+            telemetry.addLine("x button pressed");
+            lift(2416,1);
         }
 
 
 
-
-
-           /* if (SlippyLeft.getCurrentPosition() > 0) {
-                SlippyRight.setPower(-1);
-                SlippyLeft.setPower(1);
-            } else {
-                SlippyRight.setPower(0);
-                SlippyLeft.setPower(0);
-
-            */
-        //}
-
-               /* if (SlippyLeft.getCurrentPosition() < 3570) {
-                    SlippyRight.setPower(1);
-                    SlippyLeft.setPower(-1);
-                } else {
-                    SlippyRight.setPower(0);
-                    SlippyLeft.setPower(0);
-
-                */
-
-        //}
-
 //0.55 = open
 
-        if (gamepad2.right_trigger >= 0) {
-            gamepad2.setLedColor(100, 100, 100, 100);
-            Claw.setPosition(0.6 * (gamepad2.right_trigger)); //Open;
-            telemetry.addData("Position:", Claw.getPosition());
-        } /*else if (gamepad2.right_trigger > 0) {
+
+        if (gamepad2.right_trigger > 0) {
                 gamepad2.setLedColor(100, 100, 100, 100);
                 gamepad2.rumbleBlips(1);
-                Claw.setPosition(0); //Closed
+                Claw.setPosition(.55); //Closed
                 telemetry.addData("Position:", Claw.getPosition());
-            }*/
+            }
+        else {
+            Claw.setPosition(0);
+            telemetry.addData("Position:", Claw.getPosition());
+        }
 
 
     }
     private void lift(int Postarget, double speed) { //find encoder values for different levels!!!!
-        Pos = Postarget;
+        SlippyRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SlippyLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        height = Postarget; //test negative sign
         SlippyRight.setTargetPosition(height);
+        SlippyLeft.setTargetPosition(-height);
         SlippyRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        SlippyLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         SlippyRight.setPower(speed);
-
-
-/*        while (opModeIsActive() && SlippyRight.isBusy()) {
-            SlippyLeft.setPower(-speed);
+        SlippyLeft.setPower(-speed);
+        if (SlippyRight.getCurrentPosition() == height || SlippyLeft.getCurrentPosition() == -height){
+            SlippyLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            SlippyRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            SlippyRight.setPower(0);
+            SlippyLeft.setPower(0);
         }
-*/
-
+        //while (opModeIsActive() && SlippyRight.isBusy()) {
+        // idle();
+        // }
     }
+
 }
+
 
 
