@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -76,7 +77,7 @@ public class AprilTagLeftAuto extends LinearOpMode
         telemetry.addData("SlippyLeft Encoder:", SlippyLeft.getCurrentPosition());
 
         backLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         SlippyLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SlippyRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -95,7 +96,7 @@ public class AprilTagLeftAuto extends LinearOpMode
 
 
         Pos = 0;
-        rightangle = 719;
+        rightangle = 740;
         height=0;
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -206,16 +207,16 @@ public class AprilTagLeftAuto extends LinearOpMode
 
             //trajectory for Left tag detection
             telemetry.addLine("Did not find tag of interest, defaulting to Left; Or found Left tag");
-            telemetry.update(); //qr code 1
-            Claw.setPosition(0.0);
-            drive(45*7, .5);  //driving forward 5 inches = 228 //
-            driveC(rightangle,0.35);
-            drive(45*20,.35);
-            driveCC(rightangle,0.35);
-            drive(-45*8, -.35); //backwards to line up
+            telemetry.update(); //low = 1578 middle = 2531 high = 3489
+            //sees qr code 1 from left side of alliance (Right wheels lined up with right edge of square mat) //1 in = 45
+            Claw.setPosition(0);
+            drive(45*4, .5);  //driving forward 5 inches = 228 //
+            straferight(50*20,0.35);
+            sleep(1000);
+            drive(-45*7, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
-            driveCC(rightangle/2,0.35);
-            lift(3460, 0.8);
+            driveCC(400,0.35);
+            lift(3489, 0.8);
             telemetry.update();
             sleep(2500);
             drive(46*11,.35); //little bit more than 11 inches to the pole
@@ -230,12 +231,12 @@ public class AprilTagLeftAuto extends LinearOpMode
             telemetry.update();
             sleep(500);
             driveCC(340,0.35);
-            drive(52*45,.6); //2422 = 50 inches
+            drive(50*45+100,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
             lift(1400,0.8);
             sleep(500);
-            drive(-52*45,-0.5);
+            drive(-52*45-100,-0.5);
             lift(0,-0.8);
             sleep(1000);
 
@@ -244,16 +245,15 @@ public class AprilTagLeftAuto extends LinearOpMode
 
             //trajectory for Middle tag detection
             telemetry.addLine("Found Middle Tag");
-            telemetry.update(); //qr code 2
+            telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
-            drive(45*7, .5);  //driving forward 5 inches = 228 //
-            driveC(rightangle,0.35);
-            drive(45*20,.35);
-            driveCC(rightangle,0.35);
-            drive(-45*8, -.35); //backwards to line up
+            drive(45*4, .5);  //driving forward 5 inches = 228 //
+            straferight(50*20,0.35);
+            sleep(1000);
+            drive(-45*7, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
-            driveCC(rightangle/2,0.35);
-            lift(3460, 0.8);
+            driveCC(400,0.35);
+            lift(3489, 0.8);
             telemetry.update();
             sleep(2500);
             drive(46*11,.35); //little bit more than 11 inches to the pole
@@ -268,7 +268,7 @@ public class AprilTagLeftAuto extends LinearOpMode
             telemetry.update();
             sleep(500);
             driveCC(340,0.35);
-            drive(52*45,.6); //2422 = 50 inches
+            drive(50*45+50,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
             lift(1400,0.8);
@@ -280,16 +280,15 @@ public class AprilTagLeftAuto extends LinearOpMode
 
             //trajectory for Right tag detection
             telemetry.addLine("Found Right Tag");
-            telemetry.update(); //qr code 3
+            telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
-            drive(45*7, .5);  //driving forward 5 inches = 228 //
-            driveC(rightangle,0.35);
-            drive(45*20,.35);
-            driveCC(rightangle,0.35);
-            drive(-45*8, -.35); //backwards to line up
+            drive(45*4, .5);  //driving forward 5 inches = 228 //
+            straferight(50*20,0.35);
+            sleep(1000);
+            drive(-45*7, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
-            driveCC(rightangle/2,0.35);
-            lift(3460, 0.8);
+            driveCC(400,0.35);
+            lift(3489, 0.8);
             telemetry.update();
             sleep(2500);
             drive(46*11,.35); //little bit more than 11 inches to the pole
@@ -304,7 +303,7 @@ public class AprilTagLeftAuto extends LinearOpMode
             telemetry.update();
             sleep(500);
             driveCC(340,0.35);
-            drive(52*45,.6); //2422 = 50 inches
+            drive(50*45+50,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
             lift(1400,0.8);
@@ -441,6 +440,11 @@ public class AprilTagLeftAuto extends LinearOpMode
         sleep(500);
     }
     private void straferight(int Postarget, double speed){ //This should strafe 48 inches, so 50 encoders/inch
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         Pos = Postarget;
         frontLeft.setTargetPosition(Pos);
         frontRight.setTargetPosition(-Pos);
