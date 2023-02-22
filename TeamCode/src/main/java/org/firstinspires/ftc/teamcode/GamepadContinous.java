@@ -47,6 +47,8 @@ public class GamepadContinous extends OpMode {
         telemetry.addData("Motor Encoder backRight:", backRight.getCurrentPosition());
         telemetry.addData("SlippyRight Encoder:", SlippyRight.getCurrentPosition());
         telemetry.addData("SlippyLeft Encoder:", SlippyLeft.getCurrentPosition());
+        telemetry.addData("Right Trigger", gamepad2.right_trigger);
+        telemetry.addData("Left Trigger", gamepad2.left_trigger);
         //       telemetry.addData("imu", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES));
 
 
@@ -129,10 +131,10 @@ public class GamepadContinous extends OpMode {
   */
 
 
-        if (gamepad2.dpad_down) { //lift down
-            telemetry.addLine("dpaddown");
-            SlippyRight.setPower(-0.8);
-            SlippyLeft.setPower(0.8);
+        if (gamepad2.left_trigger > 0) { //lift down
+            telemetry.addLine("lift down");
+            SlippyRight.setPower(-gamepad2.left_trigger + 0.2);
+            SlippyLeft.setPower(gamepad2.left_trigger - 0.2);
         } else {
             SlippyRight.setPower(0);
             SlippyLeft.setPower(0);
@@ -148,10 +150,10 @@ public class GamepadContinous extends OpMode {
         //}
 
 
-        if (gamepad2.dpad_up) {   //lift up
-            telemetry.addLine("dpadup");
-            SlippyRight.setPower(1);
-            SlippyLeft.setPower(-1);
+        if (gamepad2.right_trigger > 0) {   //lift up
+            telemetry.addLine("lift up");
+            SlippyRight.setPower(gamepad2.right_trigger);
+            SlippyLeft.setPower(-gamepad2.right_trigger);
         } else {
             SlippyRight.setPower(0);
             SlippyLeft.setPower(0);
@@ -169,7 +171,7 @@ public class GamepadContinous extends OpMode {
 
 //0.55 = open
 
-        if (gamepad2.right_trigger >= .4) {
+        if (gamepad2.right_bumper) {
             gamepad2.setLedColor(100, 100, 100, 100);
             Claw.setPosition(.2); //Open;
             telemetry.addData("Position:", Claw.getPosition());
@@ -178,11 +180,11 @@ public class GamepadContinous extends OpMode {
         else {
             Claw.setPosition(0); //Closed;
         }
-        if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0) {
+        if (gamepad1.share && gamepad1.options) {
             telemetry.addLine("KILL SWITCH ACTIVE");
             System.exit(0); // Terminate the program
         }
-        if (gamepad2.left_trigger > .4 && gamepad2.right_trigger > 0) {
+        if (gamepad2.share && gamepad2.options) {
             telemetry.addLine("KILL SWITCH ACTIVE");
             System.exit(0); // Terminate the program
         }
