@@ -210,7 +210,7 @@ public class AprilTagRightAuto extends LinearOpMode
             drive(45*4, .5);  //driving forward 5 inches = 228 //
             strafeleft(50*20,0.35);
             sleep(1000);
-            drive(-45*7, -.35); //backwards to line up
+            drive(-383, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
             driveC(400,0.35);
             lift(3489, 0.8);
@@ -247,7 +247,7 @@ public class AprilTagRightAuto extends LinearOpMode
             drive(45*4, .5);  //driving forward 5 inches = 228 //
             strafeleft(50*20,0.35);
             sleep(1000);
-            drive(-45*7, -.35); //backwards to line up
+            drive(-383, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
             driveC(400,0.35);
             lift(3489, 0.8);
@@ -264,7 +264,7 @@ public class AprilTagRightAuto extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveC(340,0.35);
+            driveC(340,0.35); //turning facing new cone area
             drive(50*45+50,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
@@ -282,7 +282,7 @@ public class AprilTagRightAuto extends LinearOpMode
             drive(45*4, .5);  //driving forward 5 inches = 228 //
             strafeleft(50*20,0.35);
             sleep(1000);
-            drive(-45*7, -.35); //backwards to line up
+            drive(-383, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
             driveC(400,0.35);
             lift(3489, 0.8);
