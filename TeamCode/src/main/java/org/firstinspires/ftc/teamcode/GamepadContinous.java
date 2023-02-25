@@ -186,6 +186,13 @@ public class GamepadContinous extends OpMode {
           SlippyLeft.setPower(-gamepad1.right_trigger);
       }
 
+      if (gamepad1.right_stick_button){
+          SlippyRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+          SlippyLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+          SlippyLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+          SlippyRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      }
+
             if (gamepad2.right_bumper) {
                 gamepad2.setLedColor(100, 100, 100, 100);
                 Claw.setPosition(.2); //Open;

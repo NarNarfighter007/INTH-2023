@@ -208,7 +208,7 @@ public class NEWAprilTagRight extends LinearOpMode
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
             drive(45*53,0.5); //little more than 52 inches
-            driveC(400,0.35);
+            driveCC(400,0.35);
             lift(3489, 0.8);
             telemetry.update();
             sleep(2500);
@@ -223,7 +223,7 @@ public class NEWAprilTagRight extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveCC(340,0.35);
+            driveC(780,0.35);
             drive(50*45+100,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
@@ -241,7 +241,7 @@ public class NEWAprilTagRight extends LinearOpMode
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
             drive(45*53,0.43); //little more than 52 inches
-            driveC(400,0.35);
+            driveCC(400,0.35);
             lift(3489, 0.8);
             telemetry.update();
             sleep(2500);
@@ -256,7 +256,7 @@ public class NEWAprilTagRight extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveCC(340,0.35); //turning facing new cone area
+            driveC(780,0.35); //turning facing new cone area
             drive(50*45+50,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
@@ -271,7 +271,7 @@ public class NEWAprilTagRight extends LinearOpMode
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
             drive(45*53,0.43); //little more than 52 inches
-            driveC(400,0.35);
+            driveCC(400,0.35);
             lift(3489, 0.9);
             telemetry.update();
             sleep(2500);
@@ -286,7 +286,7 @@ public class NEWAprilTagRight extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveCC(340,0.35);
+            driveC(780,0.35);
             drive(50*45+50,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
