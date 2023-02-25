@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class NEWAprilTagRight extends LinearOpMode
+public class NEWAprilTagLeft extends LinearOpMode
 {
     DcMotor frontLeft;
     DcMotor frontRight;
@@ -208,12 +208,12 @@ public class NEWAprilTagRight extends LinearOpMode
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
             drive(45*53,0.5); //little more than 52 inches
-            driveCC(400,0.35);
+            driveCC(-380,0.35);
             lift(3489, 0.8);
             telemetry.update();
             sleep(2500);
             drive(46*11,.35); //little bit more than 11 inches to the pole
-            sleep(390);
+            sleep(400);
             Claw.setPosition(0.2);
             sleep(700);
             drive(-1*45,-.5);
@@ -223,7 +223,7 @@ public class NEWAprilTagRight extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveC(1110,0.35);
+            driveC(-1050,0.35);
             drive(26*45+50,.6); //2422 = 25 inches
             Claw.setPosition(0);
             sleep(500);
@@ -241,7 +241,7 @@ public class NEWAprilTagRight extends LinearOpMode
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
             drive(45*53,0.43); //little more than 52 inches
-            driveCC(390,0.35);
+            driveCC(-380,0.35);
             lift(3489, 0.8);
             telemetry.update();
             sleep(2500);
@@ -256,7 +256,7 @@ public class NEWAprilTagRight extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveC(1110,0.35); //turning facing new cone area
+            driveC(-1050,0.35); //turning facing new cone area
             drive(26*45+50,.6); //2422 = 25 inches
             Claw.setPosition(0);
             sleep(500);
@@ -271,7 +271,7 @@ public class NEWAprilTagRight extends LinearOpMode
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
             drive(45*53,0.43); //little more than 52 inches
-            driveCC(390,0.35);
+            driveCC(-380,0.35);
             lift(3489, 0.9);
             telemetry.update();
             sleep(2500);
@@ -286,7 +286,7 @@ public class NEWAprilTagRight extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveC(1110,0.35);
+            driveC(-1050,0.35);
             drive(26*45+50,.6); //2422 = 25 inches
             Claw.setPosition(0);
             sleep(500);
