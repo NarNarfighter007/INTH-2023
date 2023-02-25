@@ -123,25 +123,25 @@ public class GamepadEncoder extends OpMode {
             lift(2416, 1);
         }
 
-        if(gamepad2.dpad_up){
-            telemetry.addLine("dpadup2");
-            liftSlide();
+        if(gamepad2.right_trigger>0){
+            telemetry.addLine("liftupsmall");
+            lift(Math.round(SlippyRight.getCurrentPosition()+(100*gamepad2.right_trigger)), 0.8); // Call the lift method with the new encoder value and lift speed.
         }
 
-        if(gamepad2.dpad_down){
-            telemetry.addLine("dpaddown2");
-            lowerSlide();
+        if(gamepad2.left_trigger>0){
+            telemetry.addLine("liftdownsmall");
+            lift(Math.round(SlippyRight.getCurrentPosition()-(100*gamepad1.left_trigger)), -0.8); // Call the lift method with the new encoder value and lift speed.;
         }
 
 //0.55 = open
-        if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0) {
+        if (gamepad1.options && gamepad1.share) {
             telemetry.addLine("KILL SWITCH ACTIVE");
             System.exit(0); // Terminate the program
         }
 
-        if (gamepad2.right_trigger > 0) {
-            gamepad2.setLedColor(100, 100, 100, 100);
-            gamepad2.rumbleBlips(1);
+        if (gamepad1.right_trigger > 0) {
+            gamepad1.setLedColor(100, 100, 100, 100);
+            gamepad1.rumbleBlips(1);
             Claw.setPosition(.2); //Closed
             telemetry.addData("Position:", Claw.getPosition());
         } else {

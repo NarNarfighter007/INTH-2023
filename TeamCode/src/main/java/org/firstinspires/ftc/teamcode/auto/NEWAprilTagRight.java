@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class AprilTagRightAuto extends LinearOpMode
+public class NEWAprilTagRight extends LinearOpMode
 {
     DcMotor frontLeft;
     DcMotor frontRight;
@@ -207,11 +207,7 @@ public class AprilTagRightAuto extends LinearOpMode
             telemetry.addLine("Did not find tag of interest, defaulting to Left; Or found Left tag");
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
-            drive(45*4, .5);  //driving forward 5 inches = 228 //
-            strafeleft(50*20,0.35);
-            sleep(1000);
-            drive(-383, -.35); //backwards to line up
-            drive(45*53,0.43); //little more than 52 inches
+            drive(45*53,0.5); //little more than 52 inches
             driveC(400,0.35);
             lift(3489, 0.8);
             telemetry.update();
@@ -227,7 +223,7 @@ public class AprilTagRightAuto extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveC(340,0.35);
+            driveCC(340,0.35);
             drive(50*45+100,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
@@ -244,10 +240,6 @@ public class AprilTagRightAuto extends LinearOpMode
             telemetry.addLine("Found Middle Tag");
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
-            drive(45*4, .5);  //driving forward 5 inches = 228 //
-            strafeleft(50*20,0.35);
-            sleep(1000);
-            drive(-383, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
             driveC(400,0.35);
             lift(3489, 0.8);
@@ -264,7 +256,7 @@ public class AprilTagRightAuto extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveC(340,0.35); //turning facing new cone area
+            driveCC(340,0.35); //turning facing new cone area
             drive(50*45+50,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
@@ -274,18 +266,13 @@ public class AprilTagRightAuto extends LinearOpMode
             lift(0,-0.8);
             sleep(1000);
         }else{
-
             //trajectory for Right tag detection
             telemetry.addLine("Found Right Tag");
             telemetry.update(); //low = 1578 middle = 2531 high = 3489
             Claw.setPosition(0);
-            drive(45*4, .5);  //driving forward 5 inches = 228 //
-            strafeleft(50*20,0.35);
-            sleep(1000);
-            drive(-383, -.35); //backwards to line up
             drive(45*53,0.43); //little more than 52 inches
             driveC(400,0.35);
-            lift(3489, 0.8);
+            lift(3489, 0.9);
             telemetry.update();
             sleep(2500);
             drive(46*11,.35); //little bit more than 11 inches to the pole
@@ -299,7 +286,7 @@ public class AprilTagRightAuto extends LinearOpMode
             drive(-10*45,-.5); //10 inches back
             telemetry.update();
             sleep(500);
-            driveC(340,0.35);
+            driveCC(340,0.35);
             drive(50*45+50,.6); //2422 = 50 inches
             Claw.setPosition(0);
             sleep(500);
